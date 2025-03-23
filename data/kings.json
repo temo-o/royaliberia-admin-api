@@ -1,0 +1,17 @@
+[
+  {
+    "first_name": "King A",
+    "last_name": "The Great",
+    "additional_name": "Alexander",
+    "pseudonym": "The Conqueror",
+    "courtesy_title": "His Majesty",
+    "title": "King of Kings",
+    "date_of_birth": "1200-01-01",
+    "image_sequence_count": 1,
+    "date_of_death": "1231-01-01",
+    "position_start_year": 1200,
+    "position_end_year": 1230,
+    "position_exact_start_date": "1200-01-01",
+    "position_exact_end_date": "1230-01-01"
+  }
+]

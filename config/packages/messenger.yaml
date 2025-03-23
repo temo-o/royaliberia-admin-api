@@ -1,0 +1,22 @@
+framework:
+#    messenger:
+#        transports:
+#            rabbitmq:
+#                dsn: '%env(MESSAGE_TRANSPORT_DSN)%'
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+#            async_sqs:
+#                dsn: '%env(AWS_SQS_URL)%'
+#                options:
+#                    buffer_size: 1
+#                    wait_time_seconds: 10
+#                retry_strategy:
+#                    max_retries: 1
+#                    multiplier: 2
+#            failed: 'doctrine://default?queue_name=failed'
+#            # sync: 'sync://'
+
+#        routing:
+#            'App\Message\KingsMessage': async_sqs
+
+            # Route your messages to the transports
+            # 'App\Message\YourMessage': async
