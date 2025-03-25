@@ -50,6 +50,10 @@ class KingsRepository{
     {
         $person->setCreatedAt(new \DateTime());
         $this->entityManager->persist($person);
+    }
+
+    public function flush(): void
+    {
         $this->entityManager->flush();
     }
 

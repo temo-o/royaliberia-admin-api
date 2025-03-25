@@ -4,17 +4,25 @@ namespace App\Service;
 
 use App\DTO\AddKingsRequestDTO;
 use App\Factory\PersonFactory;
+use App\Message\KingsMessage;
 use App\Repository\KingsRepository;
 use App\Service\Redis\Cache\KingsCacheService;
 use Exception;
 use Psr\Cache\InvalidArgumentException;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\Exception\ExceptionInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\TransportNamesStamp;
 
 class KingsService
 {
     public function __construct(
         protected KingsRepository   $kingsRepository,
         protected KingsCacheService $kingsCacheService,
-        protected PersonFactory $personFactory
+        protected PersonFactory $personFactory,
+        protected MessageBusInterface $messageBus,
+        protected LoggerInterface $logger
     )
     {
     }
@@ -64,9 +72,16 @@ class KingsService
     {
         $kings = $addKingsRequestDTO->kings;
 
+        // Todo: Instead of kings, receive personIds
         foreach ($kings as $king){
             $person = $this->personFactory->createFromDto($king);
-            $this->kingsRepository->store($person);
+            $message = new KingsMessage(1);
+
+            try {
+                $this->messageBus->dispatch($message);
+            } catch (\Throwable $e) {
+                $this->logger->error('Dispatch failed: ' . $e->getMessage());
+            }
         }
     }
 }

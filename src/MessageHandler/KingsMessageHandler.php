@@ -2,19 +2,30 @@
 
 namespace App\MessageHandler;
 
+use App\Entity\Person;
 use App\Message\KingsMessage;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-class KingsMessageHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+class KingsMessageHandler
 {
+    private LoggerInterface $logger;
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager)
+    {
+        $this->logger = $logger;
+        $this->entityManager = $entityManager;
+    }
+
     public function __invoke(KingsMessage $message): void
     {
-        dump([
-            'firstname' => $message->getFirstname(),
-            'lastname' => $message->getLastname(),
-            'courtesyTitle' => $message->getCourtesyTitle(),
-            'positionStartYear' => $message->getPositionStartYear(),
-            'positionEndYear' => $message->getPositionEndYear(),
+        $person = $this->entityManager->getRepository(Person::class)->find($message->personId);
+
+        $this->logger->info('Handling KingsMessage', [
+            'firstname' =>$person->getFirstName(),
         ]);
     }
 }
