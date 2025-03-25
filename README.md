@@ -6,7 +6,7 @@ This repository contains the admin API for the Royal Iberia project, it's primar
 ## Installation
 1. Clone the repository:
 ```sh
-git clone https://github.com/your-username/royaliberia-admin-api.git
+git clone https://github.com/temo-o/royaliberia-admin-api.git
 ```
 
 2. Build containers
